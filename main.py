@@ -22,21 +22,21 @@ handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
 
 @app.route("/callback", methods=['POST'])
-# def callback():
+def callback():
  # get X-Line-Signature header value　残す
- # signature = request.headers['X-Line-Signature']
+ signature = request.headers['X-Line-Signature']
 
  # get request body as text　残す
-    # body = request.get_data(as_text=True)
-    # app.logger.info("Request body: " + body)
-# 下四つ後で消す
-    # handle webhook body
-    # try:
-        # handler.handle(body, signature)
-    # except InvalidSignatureError:
-        # abort(400)
+　body = request.get_data(as_text=True)
+　app.logger.info("Request body: " + body)
 
-    # return 'OK'
+    handle webhook body
+    try:
+        handler.handle(body, signature)
+    except InvalidSignatureError:
+        abort(400)
+
+    return 'OK'
 
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
