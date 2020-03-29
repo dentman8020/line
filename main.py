@@ -22,6 +22,7 @@ from linebot.models import TextMessage
 from linebot.models import TextSendMessage
 import gunicorn
 import os
+import logging #48 のapp がおそらくflaskのloggingとして認識されてると思い、標準モジュールの呼び出しを行った
 
 app = Flask(__name__)
 
@@ -44,8 +45,8 @@ def callback():
    # get request body as text
    body = request.get_data(as_text=True)
    
-#    app.logger.info("Request body: " + body) 消してみた
-   
+   app.logger.info("Request body: " + body) 
+#    logging.getlogger("Request body: " + body) #python のloggingとして代入してみたがerror
    # handle webhook body
    try:
        handler.handle(body, signature)
