@@ -20,12 +20,16 @@ LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
+@app.route("/")
+def hello_world():
+   return "hello world!"
+   
 @app.route("/callback", methods=['POST'])
 def callback():
- # get X-Line-Signature header value　残す
+ # get X-Line-Signature header value
  signature = request.headers['X-Line-Signature']
 
- # get request body as text　残す
+ # get request body as text
 　body = request.get_data(as_text=True)
 　app.logger.info("Request body: " + body)
 
