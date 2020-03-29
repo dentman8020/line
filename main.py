@@ -9,7 +9,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
-import gunicorn
+# import gunicorn
 
 import os
 
@@ -33,8 +33,9 @@ def callback():
 
    # get request body as text
    body = request.get_data(as_text=True)
+   
    app.logger.info("Request body: " + body)
-
+   
    # handle webhook body
    try:
        handler.handle(body, signature)
