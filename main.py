@@ -1,3 +1,4 @@
+"""
 from flask import Flask, request, abort
 
 from linebot import (
@@ -10,7 +11,16 @@ from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
 # import gunicorn
+"""
+from flask import Flask, request, abort
 
+from linebot import  LineBotApi
+from linebot import WebhookHandler
+from linebot.exceptions import InvalidSignatureError
+from linebot.models import MessageEvent
+from linebot.models import TextMessage
+from linebot.models import TextSendMessage
+import gunicorn
 import os
 
 app = Flask(__name__)
