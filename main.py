@@ -1,4 +1,6 @@
 from flask import Flask, request, abort
+# import flask
+# from flask import request
 from linebot import LineBotApi
 from linebot import WebhookHandler
 from linebot.exceptions import InvalidSignatureError
@@ -9,18 +11,20 @@ import gunicorn
 import os
 import logging #48 のapp がおそらくflaskのloggingとして認識されてると思い、標準モジュールの呼び出しを行った
 
+# app = Flask(__name__)
 app = Flask(__name__)
 
-#環境変数取得
+
+# 環境変数取得
 LINE_CHANNEL_ACCESS_TOKEN = os.environ["LINE_CHANNEL_ACCESS_TOKEN"] 
 LINE_CHANNEL_SECRET = os.environ["LINE_CHANNEL_SECRET"]
 
 line_bot_api = LineBotApi(LINE_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(LINE_CHANNEL_SECRET)
 
-@app.route("/")
+@app.route('/')
 def hello_world():
-   return "hello world!"
+    return "hello world!"
 
 @app.route("/callback", methods=['POST'])
 def callback():
@@ -34,10 +38,10 @@ def callback():
  #    logging.getlogger("Request body: " + body) #python のloggingとして代入してみたがerror
    # handle webhook body
     try:
-       handler.handle(body, signature)
+        handler.handle(body, signature)
     except InvalidSignatureError:
-       print("Invalid signature. Please check your channel access token/channel secret.")
-       abort(400)
+        print("Invalid signature. Please check your channel access token/channel secret.")
+        abort(400)
 
     return 'OK'
 
