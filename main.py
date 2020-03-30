@@ -40,21 +40,21 @@ def hello_world():
 @app.route("/callback", methods=['POST'])
 def callback():
    # get X-Line-Signature header value
-   signature = request.headers['X-Line-Signature']
+    signature = request.headers['X-Line-Signature']
 
    # get request body as text
-   body = request.get_data(as_text=True)
-   
-   app.logger.info("Request body: " + body) 
-#    logging.getlogger("Request body: " + body) #python のloggingとして代入してみたがerror
+    body = request.get_data(as_text=True)
+    
+   # app.logger.info("Request body: " + body) 
+ #    logging.getlogger("Request body: " + body) #python のloggingとして代入してみたがerror
    # handle webhook body
-   try:
+    try:
        handler.handle(body, signature)
-   except InvalidSignatureError:
+    except InvalidSignatureError:
        print("Invalid signature. Please check your channel access token/channel secret.")
        abort(400)
 
-   return 'OK'
+    return 'OK'
 
 
 @handler.add(MessageEvent, message=TextMessage)
