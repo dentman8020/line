@@ -8,6 +8,7 @@ from linebot.exceptions import (
 from linebot.models import (
     MessageEvent, TextMessage, TextSendMessage,
 )
+
 import os
 
 app = Flask(__name__)
@@ -18,6 +19,12 @@ YOUR_CHANNEL_ACCESS_TOKEN = os.environ["YOUR_CHANNEL_ACCESS_TOKEN"]
 YOUR_CHANNEL_SECRET = os.environ["YOUR_CHANNEL_SECRET"]
 line_bot_api = LineBotApi(YOUR_CHANNEL_ACCESS_TOKEN)
 handler = WebhookHandler(YOUR_CHANNEL_SECRET)
+
+def talk(word):
+    if word == "登録":
+        word = "まだ無理" 
+  
+
 
 #herokuへのデプロイが成功したかどうかを確認するためのコード
 @app.route("/")
@@ -46,9 +53,12 @@ def callback():
 #以下でWebhookから送られてきたイベントをどのように処理するかを記述する
 @handler.add(MessageEvent, message=TextMessage)
 def handle_message(event):
-    line_bot_api.reply_message(
-        event.reply_token,
-        TextSendMessage(text=event.message.text))
+    
+    event.reply_token,
+    TextSendMessage(text=event.message.text)
+    word = event.message.text
+    TextSendMessage(text=talk(word))
+        
 
 # ポート番号の設定
 if __name__ == "__main__":
