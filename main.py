@@ -56,6 +56,20 @@ def handle_message(event):
     line_bot_api.reply_message(
         event.reply_token,
         TextSendMessage(text=event.message.text))
+def message_text(event):
+    if 'おはよう' in event.message.text:
+        content = 'おはようございます'
+    elif 'こんにちは' in event.message.text:
+        content = 'こんにちは'
+    elif 'いい天気' in event.message.text:
+        content = "そうですね"
+    else:
+        content = 'ごめんなさい、あまり喋れません'
+
+    line_bot_api.reply_message(
+        event.reply_token,
+        TextSendMessage(text=content)
+    )
 # ポート番号の設定
 if __name__ == "__main__":
     port = int(os.getenv("PORT", 5000))
